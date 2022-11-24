@@ -26,16 +26,22 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public Customer saveCustomerDetails(Customer customer) {
-        return null;
+        return customerRepository.save(customer);
     }
 
     @Override
     public List<Customer> fetchAllCustomerDetails() {
-        return null;
+        return customerRepository.findAll();
     }
 
     @Override
     public boolean deleteCustomerDetail(int customerId) {
-        return false;
+        customerRepository.deleteById(customerId);
+        return true;
+    }
+
+    @Override
+    public List<Customer> fetchCustomerByProductName(String productName) {
+        return customerRepository.findByProductName(productName);
     }
 }

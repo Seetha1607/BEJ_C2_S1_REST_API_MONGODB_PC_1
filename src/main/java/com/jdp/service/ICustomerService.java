@@ -10,4 +10,6 @@ public interface ICustomerService {
     public List<Customer> fetchAllCustomerDetails();
 
     public boolean deleteCustomerDetail(int customerId);
+
+    public List<Customer> fetchCustomerByProductName(String productName);
 }

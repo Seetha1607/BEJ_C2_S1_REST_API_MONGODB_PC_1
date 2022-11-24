@@ -38,4 +38,9 @@ public class CustomerController {
     public ResponseEntity<?> deleteCustomer(@PathVariable int customerId) {
         return new ResponseEntity<>(iCustomerService.deleteCustomerDetail(customerId), HttpStatus.OK);
     }
+
+    @GetMapping("/fetchCustomerByProductName/{productName}")
+    public ResponseEntity<?> fetchCustomerByProductName(@PathVariable String productName) {
+        return new ResponseEntity<>(iCustomerService.fetchCustomerByProductName(productName), HttpStatus.ACCEPTED);
+    }
 }
