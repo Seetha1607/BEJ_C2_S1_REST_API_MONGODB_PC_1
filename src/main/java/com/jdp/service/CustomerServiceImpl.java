@@ -21,12 +21,14 @@ public class CustomerServiceImpl implements ICustomerService {
 
     private CustomerRepository customerRepository;
 
+    // A spring annotation that is used to inject the dependency.
     @Autowired
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     @Override
+    // Saving the customer details.
     public Customer saveCustomerDetails(Customer customer) throws CustomerExistsAlready {
         if (customerRepository.findById(customer.getCustomerId()).isPresent()) {
             throw new CustomerExistsAlready();
@@ -35,11 +37,13 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    // Fetching all the customer details.
     public List<Customer> fetchAllCustomerDetails() {
         return customerRepository.findAll();
     }
 
     @Override
+    // Deleting the customer details.
     public boolean deleteCustomerDetail(int customerId) throws CustomerNotExists {
         if (customerRepository.findById(customerId).isEmpty()) {
             throw new CustomerNotExists();
@@ -49,6 +53,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    // Fetching the customer details by product name.
     public List<Customer> fetchCustomerByProductName(String productName) {
         return customerRepository.findByProductName(productName);
     }

@@ -11,5 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.CONFLICT, reason = "Customer with Specific code already Exists. Try some other code!")
+/**
+ * A custom exception class.
+ */
 public class CustomerExistsAlready extends Exception {
 }
