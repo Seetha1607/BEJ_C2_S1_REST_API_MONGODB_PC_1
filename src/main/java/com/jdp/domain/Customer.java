@@ -7,5 +7,16 @@
 
 package com.jdp.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Customer {
+    @Id
+    private int customerId;
+    private String customerName;
+    private String customerPhoneNumber;
+    private Product customerProduct;
+
+
 }
