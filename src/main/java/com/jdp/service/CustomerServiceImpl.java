@@ -8,6 +8,8 @@
 package com.jdp.service;
 
 import com.jdp.domain.Customer;
+import com.jdp.exception.CustomerExistsAlready;
+import com.jdp.exception.CustomerNotExists;
 import com.jdp.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,10 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public Customer saveCustomerDetails(Customer customer) {
+    public Customer saveCustomerDetails(Customer customer) throws CustomerExistsAlready {
+        if (customerRepository.findById(customer.getCustomerId()).isPresent()) {
+            throw new CustomerExistsAlready();
+        }
         return customerRepository.save(customer);
     }
 
@@ -35,7 +40,10 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public boolean deleteCustomerDetail(int customerId) {
+    public boolean deleteCustomerDetail(int customerId) throws CustomerNotExists {
+        if (customerRepository.findById(customerId).isEmpty()) {
+            throw new CustomerNotExists();
+        }
         customerRepository.deleteById(customerId);
         return true;
     }

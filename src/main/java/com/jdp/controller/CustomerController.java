@@ -8,6 +8,8 @@
 package com.jdp.controller;
 
 import com.jdp.domain.Customer;
+import com.jdp.exception.CustomerExistsAlready;
+import com.jdp.exception.CustomerNotExists;
 import com.jdp.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,14 @@ public class CustomerController {
     }
 
     @PostMapping("/saveCustomerDetails")
-    public ResponseEntity<?> saveCustomerDetails(@RequestBody Customer customer) {
-        return new ResponseEntity<>(iCustomerService.saveCustomerDetails(customer), HttpStatus.CREATED);
+    public ResponseEntity<?> saveCustomerDetails(@RequestBody Customer customer) throws CustomerExistsAlready {
+        try {
+            return new ResponseEntity<>(iCustomerService.saveCustomerDetails(customer), HttpStatus.CREATED);
+        } catch (CustomerExistsAlready e) {
+            throw new CustomerExistsAlready();
+        } catch (Exception e) {
+            return new ResponseEntity<>("Server Error!!!try after Sometime", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/fetchCustomerDetails")
@@ -35,8 +43,14 @@ public class CustomerController {
     }
 
     @DeleteMapping("/deleteCustomer/{customerId}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable int customerId) {
-        return new ResponseEntity<>(iCustomerService.deleteCustomerDetail(customerId), HttpStatus.OK);
+    public ResponseEntity<?> deleteCustomer(@PathVariable int customerId) throws CustomerNotExists {
+        try {
+            return new ResponseEntity<>(iCustomerService.deleteCustomerDetail(customerId), HttpStatus.OK);
+        } catch (CustomerNotExists e) {
+            throw new CustomerNotExists();
+        } catch (Exception e) {
+            return new ResponseEntity<>("Server Error!!!try after Sometime", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/fetchCustomerByProductName/{productName}")
